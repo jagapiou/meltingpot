@@ -25,8 +25,29 @@ concurrency:
 permissions: read-all
 
 jobs:
-  run-meltingpot-tests:
-    name: Test Melting Pot
+  lint_and_typecheck:
+    name: Lint and typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: ${{ github.event_name != 'workflow_dispatch' }}
+      matrix:
+        os:
+          - ubuntu-latest
+        python-version:
+          - '3.9'
+    steps:
+      - name: Checkout Melting Pot
+        uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Lint and typecheck Melting Pot
+      - uses: pre-commit/action@v3.0.0
+
+  install_and_test:
+    name: Install and test
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
@@ -42,7 +63,7 @@ jobs:
       - name: Checkout Melting Pot
         uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install and test Melting Pot
