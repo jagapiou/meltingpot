@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Lint and typecheck Melting Pot
-      - uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.0
 
   install_and_test:
     name: Install and test
