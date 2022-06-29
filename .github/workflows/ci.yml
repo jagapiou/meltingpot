@@ -48,7 +48,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
       - name: Run PyLint on changed files
-        run: pylint
+        run: pylint --recursive=y meltingpot examples
 
   install_and_test:
     name: Install and test
