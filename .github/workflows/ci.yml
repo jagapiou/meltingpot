@@ -39,22 +39,16 @@ jobs:
     steps:
       - name: Checkout Melting Pot
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-      - name: Lint and typecheck
-        uses: ricardochaves/python-lint@d6ccfab90dca92e984258754d8d3cc9d963b093d  # Use a specific commit and not a tag.
+      - name: Set up Python 3.9
+        uses: actions/setup-python@d09bd5e6005b175076f227b13d9730d56e9dcfcb
         with:
-          python-root-list: "meltingpot examples"
-          use-pylint: true
-          use-pycodestyle: false
-          use-flake8: false
-          use-black: false
-          use-mypy: false
-          use-isort: false
-          extra-pylint-options: ""
-          extra-pycodestyle-options: ""
-          extra-flake8-options: ""
-          extra-black-options: ""
-          extra-mypy-options: ""
-          extra-isort-options: ""
+          python-version: '3.9'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+      - name: Run PyLint on changed files
+        run: pylint
 
   install_and_test:
     name: Install and test
