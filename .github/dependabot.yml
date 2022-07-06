@@ -15,5 +15,5 @@ updates:
     schedule:
       interval: monthly
     ignore:
-      - dependency-name: "python"
-        versions: [">=3.10"]
+      - dependency-name: "vscode/devcontainers/python"
+        versions: [">= 3.10"]
