@@ -1,6 +1,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.236.0/containers/python-3/.devcontainer/base.Dockerfile
 # Note bullseye version is multi-architecture (supports arm64)
-FROM mcr.microsoft.com/vscode/devcontainers/python@sha256:5edbcca74c8d496e8921547c9e9491172d278d011221c9b4aa5edb1f3c5a0e62  # 0-python-3.9-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/python@sha256:e3cc2eb4c79e7213092bb92efd0b578a62d9f24e517ec6118a3b4e399770b794  # 0-python-3.9-bullseye
 
 # Install pytest
 RUN pip install pytest
