@@ -71,11 +71,12 @@ function install_dmlab2d() {
       --experimental_ui_max_stdouterr_bytes=-1 \
       --sandbox_debug \
       //dmlab2d:dmlab2d_wheel
-  ls -la bazel-bin/dmlab2d
   popd
 
+  ls -la ./lab2d/bazel-bin/dmlab2d
+  
   echo -e "\nInstalling dmlab2d..."
-  pip install --no-index --find-links=lab2d/bazel-bin/dmlab2d dmlab2d
+  pip install --no-index --find-links=./lab2d/bazel-bin/dmlab2d dmlab2d
 }
 
 
