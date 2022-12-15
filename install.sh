@@ -75,6 +75,10 @@ function install_dmlab2d() {
 
   ls -la ./lab2d/bazel-bin/dmlab2d
   
+  objdump -x ./lab2d/bazel-bin/dmlab2d/dmlab2d.so | grep 'R.*PATH'
+  
+  readelf -d ./lab2d/bazel-bin/dmlab2d/dmlab2d.so | head -20
+  
   echo -e "\nInstalling dmlab2d..."
   pip install --find-links=./lab2d/bazel-bin/dmlab2d dmlab2d
 }
