@@ -79,6 +79,7 @@ function install_dmlab2d() {
   popd
 
   ls -la ./lab2d/bazel-bin/dmlab2d
+  pip --version
   pip debug --verbose
 
   echo -e "\nInstalling dmlab2d..."
