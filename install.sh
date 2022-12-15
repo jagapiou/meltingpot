@@ -67,7 +67,7 @@ function install_dmlab2d() {
     exit 1
   fi
   pushd lab2d
-  C=clang CXX=clang++ bazel build \
+  SYSTEM_VERSION_COMPAT=0 C=clang CXX=clang++ bazel build \
       --compilation_mode=opt \
       --dynamic_mode=off \
       --config="${LUA_VERSION}" \
@@ -79,8 +79,8 @@ function install_dmlab2d() {
   popd
 
   ls -la ./lab2d/bazel-bin/dmlab2d
-  pip --version
   pip debug --verbose
+  SYSTEM_VERSION_COMPAT=0 pip debug --verbose
 
   echo -e "\nInstalling dmlab2d..."
   pip install -vvv --find-links=./lab2d/bazel-bin/dmlab2d dmlab2d
