@@ -52,6 +52,7 @@ setuptools.setup(
             'lua/levels/**/*',
         ],
     },
+    include_package_data=True,
     python_requires='>=3.9',
     install_requires=[
         'absl-py',
