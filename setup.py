@@ -18,6 +18,9 @@ import setuptools
 
 IS_M1_MAC = platform.system() == 'Darwin' and platform.machine() == 'arm64'
 
+packages = setuptools.find_namespace_packages(exclude=['*_test.py'])
+print(packages)
+
 setuptools.setup(
     name='dm-meltingpot',
     version='2.1.0',
@@ -44,6 +47,7 @@ setuptools.setup(
     ],
     packages=['meltingpot'],
     include_package_data=True,
+    zip_safe=False,
     python_requires='>=3.9',
     install_requires=[
         'absl-py',
