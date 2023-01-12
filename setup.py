@@ -43,15 +43,6 @@ setuptools.setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
     packages=['meltingpot'],
-    package_data={
-        'meltingpot': [
-            'assets/saved_models/**/**/saved_model.pb',
-            'assets/saved_models/**/**/variables/variables.data-00000-of-00001',
-            'assets/saved_models/**/**/variables/variables.index',
-            'lua/modules/*',
-            'lua/levels/**/*',
-        ],
-    },
     include_package_data=True,
     python_requires='>=3.9',
     install_requires=[
