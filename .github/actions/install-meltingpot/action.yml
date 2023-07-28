@@ -10,13 +10,38 @@ inputs:
 runs:
   using: composite
   steps:
+    # - name: Get current runner
+    #   id: get-runner
+    #   shell: bash
+    #   run: |
+    #     echo "runner=$(uname -s)-$(uname -r)" >> $GITHUB_OUTPUT
+
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1
       with:
         python-version: ${{ inputs.python-version }}
+        cache: pip
+        cache-dependency-path: setup.py
+
+    - name: Restore assets
+      id: assets-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: assets
+        key: assets-${{ hashFiles('setup.py') }}
+        restore-keys: |
+          assets-
 
     - name: Install Python dependencies
       shell: bash
       run: |
+        pip cache list
         pip install --upgrade pip
         pip install --editable .[dev]
+
+    - name: Save assets
+      if: steps.assets-restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v3
+      with:
+        path: assets
+        key: ${{ steps.assets-restore.outputs.cache-primary-key }}
