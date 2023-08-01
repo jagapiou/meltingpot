@@ -105,7 +105,7 @@ setuptools.setup(
     python_requires='>=3.10',
     install_requires=[
         'absl-py==1.4.0',
-        'chex==0.1.7',
+        'chex==0.1.82',
         'dm-env==1.6',
         'dm-tree==0.1.8',
         'dmlab2d==1.0.0',
