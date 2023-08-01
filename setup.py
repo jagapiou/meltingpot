@@ -109,7 +109,7 @@ setuptools.setup(
         'dm-env==1.6',
         'dm-tree==0.1.8',
         'dmlab2d==1.0.0',
-        'immutabledict==2.0.0',
+        'immutabledict==3.0.0',
         'ml-collections==0.1.1',
         'networkx==3.1',
         'numpy==1.24.3',
