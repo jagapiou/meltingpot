@@ -112,7 +112,7 @@ setuptools.setup(
         'immutabledict==2.0.0',
         'ml-collections==0.1.1',
         'networkx==3.1',
-        'numpy==1.24.3',
+        'numpy==1.25.2',
         'opencv-python==4.8.0.74',
         'pandas==1.3.5',
         'pygame==2.5.0',
