@@ -114,7 +114,7 @@ setuptools.setup(
         'networkx==3.1',
         'numpy==1.24.3',
         'opencv-python==4.8.0.74',
-        'pandas==1.3.5',
+        'pandas==2.1.1',
         'pygame==2.5.0',
         'reactivex==4.0.4',
         'tensorflow==2.13.0',
