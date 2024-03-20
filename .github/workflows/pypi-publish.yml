@@ -10,7 +10,7 @@ on:
       upload_to_test_pypi:
         description: 'Upload to Test PyPi'
         type: boolean
-        default: true
+        default: false
       upload_to_pypi:
         description: 'Upload to PyPi'
         type: boolean
@@ -33,18 +33,28 @@ jobs:
       - name: Checkout Melting Pot
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Show python version
+        run: pip list
+
       - name: Build source distribution
         run: python setup.py sdist
 
+      - name: Install from source distribution
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install dist/*.tar.gz[dev]
+          pytest -n auto --pyargs meltingpot
+
       - name: Publish to TestPyPI
         if: github.event_name == 'release' || inputs.upload_to_test_pypi
-        uses: pypa/gh-action-pypi-publish@e53eb8b103ffcb59469888563dc324e3c8ba6f06
+        uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450
         with:
           repository-url: https://test.pypi.org/legacy/
           verbose: true
 
       - name: Publish to PyPI
         if: github.event_name == 'release' || inputs.upload_to_pypi
-        uses: pypa/gh-action-pypi-publish@e53eb8b103ffcb59469888563dc324e3c8ba6f06
+        uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450
         with:
           verbose: true
