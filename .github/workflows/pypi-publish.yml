@@ -10,7 +10,7 @@ on:
       upload_to_test_pypi:
         description: 'Upload to Test PyPi'
         type: boolean
-        default: true
+        default: false
       upload_to_pypi:
         description: 'Upload to PyPi'
         type: boolean
@@ -38,6 +38,13 @@ jobs:
 
       - name: Build source distribution
         run: python setup.py sdist
+
+      - name: Install from source distribution
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install dist/*.tar.gz[dev]
+          pytest -n auto --pyargs meltingpot
 
       - name: Publish to TestPyPI
         if: github.event_name == 'release' || inputs.upload_to_test_pypi
