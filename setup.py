@@ -99,8 +99,8 @@ setuptools.setup(
     packages=setuptools.find_packages(include=['meltingpot', 'meltingpot.*']),
     package_data={
         'meltingpot': [
-            'lua/levels/*.lua',
-            'lua/modules/*/*.lua',
+            'lua/levels/*/*.lua',
+            'lua/modules/*.lua',
         ],
     },
     python_requires='>=3.11',
