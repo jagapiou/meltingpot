@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Concordia
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Build distribution
-        run: python setup.py sdist
+        run: python setup.py sdist bdist_wheel
       - name: Save artifact
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         with:
@@ -65,11 +65,12 @@ jobs:
           pip list
       - name: Test source distribution
         run: |
-          pytest -n auto --pyargs concordia
+          pytest -n auto --pyargs meltingpot
 
   publish:
     name: Publish
     needs: test
+    if: ${{ ! failure() }}
     runs-on: ubuntu-latest
     environment:
       name: pypi
