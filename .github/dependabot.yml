@@ -8,8 +8,7 @@ updates:
   - package-ecosystem: github-actions
     directories:
       - "/"
-      - "/.github/actions/install-concordia"
-      - "/.github/actions/install-examples"
+      - "/.github/actions/*"
     schedule:
       interval: monthly
     groups:
