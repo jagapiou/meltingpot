@@ -6,19 +6,16 @@ updates:
       interval: monthly
 
   - package-ecosystem: github-actions
-    directory: /
+    directories:
+      - "/"
+      - "/.github/actions/install-concordia"
+      - "/.github/actions/install-examples"
     schedule:
       interval: monthly
-
-  - package-ecosystem: github-actions
-    directory: "/.github/actions/install-meltingpot"
-    schedule:
-      interval: monthly
-
-  - package-ecosystem: github-actions
-    directory: "/.github/actions/install-examples"
-    schedule:
-      interval: monthly
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: docker
     directory: /.devcontainer
