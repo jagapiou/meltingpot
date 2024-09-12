@@ -1,15 +1,76 @@
 name: install-examples
 
+inputs:
+  python-version:
+    description: Python version
+    required: false
+    default: '3.11'
+    type: string
+
 runs:
   using: composite
   steps:
+    - name: Get current runner
+      id: os-info
+      shell: bash
+      run: |
+        if [ "${RUNNER_OS}" = 'macOS' ]; then
+          echo "name=$(sw_vers -productName)" >> $GITHUB_OUTPUT
+          echo "version=$(sw_vers -productVersion)" >> $GITHUB_OUTPUT
+        elif [ "${RUNNER_OS}" = 'Linux' ]; then
+          echo "name=$(lsb_release -i -s)" >> $GITHUB_OUTPUT
+          echo "version=$(lsb_release -r -s)" >> $GITHUB_OUTPUT
+        else
+          exit 1
+        fi
+
+    - name: Set up Python ${{ inputs.python-version }}
+      id: setup-python
+      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3
+      with:
+        python-version: ${{ inputs.python-version }}
+
     - name: Install Melting Pot
       uses: ./.github/actions/install-meltingpot
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Restore Examples installation
+      id: restore
+      uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+      with:
+        path: venv
+        key: install-examples-${{ steps.os-info.outputs.name }}-${{ steps.os-info.outputs.version }}-py${{ steps.setup.outputs.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('examples/requirements.txt') }}
+
+    - name: Activate venv
+      shell: bash
+      run: |
+        echo "${PWD}/venv/bin" >> $GITHUB_PATH
 
     - name: Install requirements for examples
+      if: steps.restore.outputs.cache-hit != 'true'
       shell: bash
-      run: pip install -r examples/requirements.txt
+      run: |
+        pip install -r examples/requirements.txt
 
-    - name: Show installed dependencies
+    - name: Show installation
       shell: bash
-      run: pip list
+      run: |
+        which python
+        python --version
+        which pip
+        pip --version
+        which pylint
+        pylint --version
+        which pytest
+        pytest --version
+        which pytype
+        pytype --version
+        pip list
+
+    - name: Save Examples installation
+      if: steps.restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+      with:
+        path: venv
+        key: ${{ steps.restore.outputs.cache-primary-key }}
