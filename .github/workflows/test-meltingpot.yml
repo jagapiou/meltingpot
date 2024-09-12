@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/actions/install-meltingpot/action.yml'
       - '.github/workflows/test-meltingpot.yml'
+      - '.pylintrc'
       - 'meltingpot/**'
       - 'pyproject.toml'
       - 'setup.py'
@@ -16,6 +17,7 @@ on:
     paths:
       - '.github/actions/install-meltingpot/action.yml'
       - '.github/workflows/test-meltingpot.yml'
+      - '.pylintrc'
       - 'meltingpot/**'
       - 'pyproject.toml'
       - 'setup.py'
@@ -45,9 +47,17 @@ jobs:
     steps:
       - name: Checkout Melting Pot
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+
       - name: Install Melting Pot
         uses: ./.github/actions/install-meltingpot
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Test Melting Pot
         run: pytest meltingpot
+
+      - name: Run PyLint on Melting Pot
+        run: pylint --errors-only meltingpot
+
+      - name: Run PyType on Melting Pot
+        run: pytype meltingpot
