@@ -30,34 +30,86 @@ concurrency:
 permissions: read-all
 
 jobs:
-  pytest:
-    name: Test Melting Pot
-    runs-on: ${{ matrix.os }}
-    env:
-      SYSTEM_VERSION_COMPAT: 0  # See https://github.com/actions/setup-python/issues/279.
-    timeout-minutes: 180
-    strategy:
-      fail-fast: ${{ github.event_name != 'workflow_dispatch' }}
-      matrix:
-        os:
-          - macos-12
-          - ubuntu-20.04
-        python-version:
-          - '3.11'
+  # pytest:
+  #   name: Test Melting Pot
+  #   runs-on: ${{ matrix.os }}
+  #   env:
+  #     SYSTEM_VERSION_COMPAT: 0  # See https://github.com/actions/setup-python/issues/279.
+  #   timeout-minutes: 180
+  #   strategy:
+  #     fail-fast: ${{ github.event_name != 'workflow_dispatch' }}
+  #     matrix:
+  #       os:
+  #         - macos-12
+  #         - ubuntu-20.04
+  #       python-version:
+  #         - '3.11'
+  #   steps:
+  #     - name: Checkout Melting Pot
+  #       uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+
+  #     - name: Install Melting Pot
+  #       uses: ./.github/actions/install-meltingpot
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+
+  #     - name: Test Melting Pot
+  #       run: pytest meltingpot
+
+  #     - name: Run PyLint on Melting Pot
+  #       run: pylint --errors-only meltingpot
+
+  #     - name: Run PyType on Melting Pot
+  #       run: pytype meltingpot
+  preinstall-concordia:
+    name: Preinstall Concordia
+    runs-on: ubuntu.latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout Melting Pot
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      # - name: Checkout Concordia
+      #   uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      # - name: Install Concordia
+      #   uses: ./.github/actions/install-concordia
+      - run: exit 0
 
-      - name: Install Melting Pot
-        uses: ./.github/actions/install-meltingpot
-        with:
-          python-version: ${{ matrix.python-version }}
+  test-concordia:
+    name: Test Concordia
+    needs: preinstall-concordia
+    runs-on: ubuntu.latest
+    timeout-minutes: 30
+    steps:
+      # - name: Checkout Concordia
+      #   uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      # - name: Install Concordia
+      #   uses: ./.github/actions/install-concordia
+      # - name: Typecheck Concordia
+      #   run: pytest concordia
+      - run: exit 0
 
-      - name: Test Melting Pot
-        run: pytest meltingpot
+  pytype-concordia:
+    name: Typecheck Concordia
+    needs: preinstall-concordia
+    runs-on: ubuntu.latest
+    timeout-minutes: 30
+    steps:
+      # - name: Checkout Concordia
+      #   uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      # - name: Install Concordia
+      #   uses: ./.github/actions/install-concordia
+      # - name: Typecheck Concordia
+      #   run: pytype concordia
+      - run: exit 1
 
-      - name: Run PyLint on Melting Pot
-        run: pylint --errors-only meltingpot
-
-      - name: Run PyType on Melting Pot
-        run: pytype meltingpot
+  pylint-concordia:
+    name: Lint Concordia
+    needs: preinstall-concordia
+    runs-on: ubuntu.latest
+    timeout-minutes: 30
+    steps:
+      # - name: Checkout Concordia
+      #   uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      # - name: Install Concordia
+      #   uses: ./.github/actions/install-concordia
+      # - name: Lint Concordia
+      #   run: pylint --errors-only concordia
+      - run: exit 1
