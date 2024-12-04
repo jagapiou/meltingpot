@@ -47,6 +47,7 @@ jobs:
           - ubuntu-latest
         python-version:
           - '3.11'
+          - '3.12'
 
     steps:
       - name: Set up Python ${{ matrix.python_version }}
