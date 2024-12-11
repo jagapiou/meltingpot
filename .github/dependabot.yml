@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    pip:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: github-actions
     directories:
